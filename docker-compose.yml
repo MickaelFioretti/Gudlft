@@ -1,0 +1,19 @@
+services:
+  gudlft:
+    container_name: gudlft
+    # Docker stays up in background
+    tty: true
+
+    volumes:
+      # Sharing project folder from Host to Docker
+      - type: bind
+        source: ./app
+        target: /home/user/app
+
+    # Share network Stack host to docker
+    # Priviledge mode => Not safe for production
+    #network_mode: host
+
+    build:
+      context: .
+      dockerfile: Dockerfile
