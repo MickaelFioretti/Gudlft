@@ -16,7 +16,9 @@ def loadCompetitions():
 
 app = Flask(__name__)
 app.secret_key = "something_special"
-app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 competitions = loadCompetitions()
 clubs = loadClubs()
