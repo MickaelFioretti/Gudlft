@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Définir le dossier de couverture
+COVERAGE_DIR="coverage_data"
+
+# Vérifie si un argument (nom du test) a été fourni
+if [ $# -eq 0 ]
+then
+    echo "Aucun argument spécifié: Exécution de tous les tests avec couverture."
+    pytest --cov=chemin/vers/votre/package --cov-report term --cov-report html:${COVERAGE_DIR}
+else
+    echo "Exécution du test: $1 avec couverture."
+    pytest -k "$1" --cov=chemin/vers/votre/package --cov-report term --cov-report html:${COVERAGE_DIR}
+fi
