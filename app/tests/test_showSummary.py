@@ -17,3 +17,9 @@ def test_show_summary_without_email(client):
     )
     assert response.status_code == 302  # Redirection
     assert response.location.endswith(url_for("index"))
+
+
+# Test quand l'email est présent
+def test_show_summary_with_email(client):
+    response = client.post("/showSummary", data={"email": "john@simplylift.co"})
+    assert response.status_code == 200  # OK
