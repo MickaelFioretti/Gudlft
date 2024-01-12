@@ -2,6 +2,8 @@
 
 # Définir le dossier de couverture
 COVERAGE_DIR="coverage_data"
+# Spécifier le chemin de votre package, par exemple 'app' ou '.'
+COVERAGE_PATH="."
 
 # Vérifie si un argument (nom du test) a été fourni
 if [ $# -eq 0 ]
