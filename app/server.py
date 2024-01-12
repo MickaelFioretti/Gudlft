@@ -17,6 +17,9 @@ def loadCompetitions():
 app = Flask(__name__)
 app.secret_key = "something_special"
 
+if __name__ == "__main__":
+    app.run(debug=True)
+
 competitions = loadCompetitions()
 clubs = loadClubs()
 
@@ -28,8 +31,14 @@ def index():
 
 @app.route("/showSummary", methods=["POST"])
 def showSummary():
-    club = [club for club in clubs if club["email"] == request.form["email"]][0]
-    return render_template("welcome.html", club=club, competitions=competitions)
+    email = request.form.get("email")
+    matched_clubs = [c for c in clubs if c["email"] == email]
+    if not matched_clubs:
+        flash("Sorry, we don't have your email address on file!")
+        return redirect(url_for("index"))
+    else:
+        club = matched_clubs[0]
+        return render_template("welcome.html", club=club, competitions=competitions)
 
 
 @app.route("/book/<competition>/<club>")
