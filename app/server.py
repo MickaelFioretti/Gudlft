@@ -67,6 +67,9 @@ def purchasePlaces():
         return render_template("welcome.html", club=club, competitions=competitions)
 
     competition["numberOfPlaces"] = int(competition["numberOfPlaces"]) - placesRequired
+    club["points"] = int(club["points"]) - placesRequired
+    with open("clubs.json", "w") as c:
+        json.dump({"clubs": clubs}, c)
 
     flash("Great-booking complete!")
     return render_template("welcome.html", club=club, competitions=competitions)
