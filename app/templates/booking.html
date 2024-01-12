@@ -8,6 +8,10 @@
         const pointAvailable = parseInt("{{club['points']}}", 10);
         function validateForm() {
             const places = parseInt(document.getElementById("places").value, 10);
+            if (places > 12) {
+                alert("You cannot book more than 12 places for a competition!");
+                return false;
+            }
             if (places > pointAvailable || isNaN(places)) {
                 alert("You don't have enough points to book that many places!");
                 return false;
