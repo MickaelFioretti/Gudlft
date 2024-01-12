@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking for {{competition['name']}} || GUDLFT</title>
     <script>
-        const pointAvailable = "{{club['points']}}"
+        const pointAvailable = parseInt("{{club['points']}}", 10);
         function validateForm() {
-            const places = parseInt(document.getElementById("places").value);
-            if (places > pointAvailable) {
+            const places = parseInt(document.getElementById("places").value, 10);
+            if (places > pointAvailable || isNaN(places)) {
                 alert("You don't have enough points to book that many places!");
                 return false;
             }
