@@ -9,8 +9,8 @@ COVERAGE_PATH="."
 if [ $# -eq 0 ]
 then
     echo "Aucun argument spécifié: Exécution de tous les tests avec couverture."
-    pytest -q tests/ --cov=${COVERAGE_PATH} --cov-report term --cov-report html:${COVERAGE_DIR} -n auto
+    pytest --cov=chemin/vers/votre/package --cov-report term --cov-report html:${COVERAGE_DIR}
 else
     echo "Exécution du test: $1 avec couverture."
-    pytest tests/ -k "$1" --cov=${COVERAGE_PATH} --cov-report term --cov-report html:${COVERAGE_DIR} -n auto
+    pytest -k "$1" --cov=chemin/vers/votre/package --cov-report term --cov-report html:${COVERAGE_DIR}
 fi
