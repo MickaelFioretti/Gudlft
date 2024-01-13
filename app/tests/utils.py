@@ -11,7 +11,7 @@ def reset_clubs_data():
             {"name": "She Lifts", "email": "kate@shelifts.co.uk", "points": "12"},
         ]
     }
-    with open("clubs.json", "w") as c:
+    with open("clubs.json", mode="w", encoding="utf-8") as c:
         json.dump(original_data, c)
 
 
@@ -31,7 +31,7 @@ def reset_competitions_data():
             },
         ]
     }
-    with open("competitions.json", "w") as c:
+    with open("competitions.json", mode="w", encoding="utf-8") as c:
         json.dump(original_data, c)
 
 
