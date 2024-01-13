@@ -3,13 +3,13 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 def loadClubs():
-    with open("clubs.json") as c:
+    with open("clubs.json", mode="r", encoding="utf-8") as c:
         listOfClubs = json.load(c)["clubs"]
         return listOfClubs
 
 
 def loadCompetitions():
-    with open("competitions.json") as comps:
+    with open("competitions.json", mode="r", encoding="utf-8") as comps:
         listOfCompetitions = json.load(comps)["competitions"]
         return listOfCompetitions
 
@@ -58,6 +58,9 @@ def book(competition, club):
 
 @app.route("/purchasePlaces", methods=["POST"])
 def purchasePlaces():
+    competitions = loadCompetitions()
+    clubs = loadClubs()
+
     competition = [c for c in competitions if c["name"] == request.form["competition"]][
         0
     ]
@@ -79,10 +82,10 @@ def purchasePlaces():
     club["points"] = int(club["points"]) - placesRequired
 
     # Mise à jour du fichier JSON
-    with open("clubs.json", "w") as c:
+    with open("clubs.json", mode="w", encoding="utf-8") as c:
         json.dump({"clubs": clubs}, c)
 
-    with open("competitions.json", "w") as comps:
+    with open("competitions.json", mode="w", encoding="utf-8") as comps:
         json.dump({"competitions": competitions}, comps)
 
     flash("Great-booking complete!")
