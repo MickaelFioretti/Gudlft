@@ -3,13 +3,13 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 
 
 def loadClubs():
-    with open("clubs.json") as c:
+    with open("clubs.json", mode="r", encoding="utf-8") as c:
         listOfClubs = json.load(c)["clubs"]
         return listOfClubs
 
 
 def loadCompetitions():
-    with open("competitions.json") as comps:
+    with open("competitions.json", mode="r", encoding="utf-8") as comps:
         listOfCompetitions = json.load(comps)["competitions"]
         return listOfCompetitions
 
@@ -33,6 +33,8 @@ def index():
 def showSummary():
     email = request.form.get("email")
     matched_clubs = [c for c in clubs if c["email"] == email]
+
+    # Vérifier si l'adresse e-mail est dans le fichier JSON
     if not matched_clubs:
         flash("Sorry, we don't have your email address on file!")
         return redirect(url_for("index"))
@@ -56,20 +58,35 @@ def book(competition, club):
 
 @app.route("/purchasePlaces", methods=["POST"])
 def purchasePlaces():
+    competitions = loadCompetitions()
+    clubs = loadClubs()
+
     competition = [c for c in competitions if c["name"] == request.form["competition"]][
         0
     ]
     club = [c for c in clubs if c["name"] == request.form["club"]][0]
     placesRequired = int(request.form["places"])
 
+    # Vérifier si le nombre de places demandées dépasse 12
+    if placesRequired > 12:
+        flash("Cannot book more than 12 places for a competition.")
+        return render_template("welcome.html", club=club, competitions=competitions)
+
+    # Vérification des points disponibles
     if placesRequired > int(club["points"]):
         flash("You don't have enough points for this booking.")
         return render_template("welcome.html", club=club, competitions=competitions)
 
+    # Mise à jour des points du club et des places disponibles dans la compétition
     competition["numberOfPlaces"] = int(competition["numberOfPlaces"]) - placesRequired
     club["points"] = int(club["points"]) - placesRequired
-    with open("clubs.json", "w") as c:
+
+    # Mise à jour du fichier JSON
+    with open("clubs.json", mode="w", encoding="utf-8") as c:
         json.dump({"clubs": clubs}, c)
+
+    with open("competitions.json", mode="w", encoding="utf-8") as comps:
+        json.dump({"competitions": competitions}, comps)
 
     flash("Great-booking complete!")
     return render_template("welcome.html", club=club, competitions=competitions)

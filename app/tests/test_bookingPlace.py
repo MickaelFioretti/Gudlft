@@ -1,5 +1,6 @@
 from server import app, loadClubs, loadCompetitions
 import pytest
+from utils import run_around_tests  # noqa: F401
 
 
 @pytest.fixture
