@@ -14,7 +14,7 @@ def test_purchase_places_with_sufficient_points(client):
     clubs = loadClubs()
     competitions = loadCompetitions()
     sufficient_points_club = clubs[0]  # "Simply Lift" avec 13 points
-    competition = competitions[0]  # "Spring Festival" avec 25 places disponibles
+    competition = competitions[2]  # "Summer Showdown" avec 20 places disponibles
 
     response = client.post(
         "/purchasePlaces",
@@ -32,7 +32,7 @@ def test_purchase_places_with_insufficient_points(client):
     clubs = loadClubs()
     competitions = loadCompetitions()
     insufficient_points_club = clubs[1]  # "Iron Temple" avec 4 points
-    competition = competitions[0]  # "Spring Festival"
+    competition = competitions[2]  # "Summer Showdown"
 
     response = client.post(
         "/purchasePlaces",

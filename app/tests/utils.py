@@ -29,6 +29,11 @@ def reset_competitions_data():
                 "date": "2020-10-22 13:30:00",
                 "numberOfPlaces": "13",
             },
+            {
+                "name": "Summer Showdown",
+                "date": "2024-07-01 13:30:00",
+                "numberOfPlaces": "20",
+            },
         ]
     }
     with open("competitions.json", mode="w", encoding="utf-8") as c:
