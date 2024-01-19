@@ -12,7 +12,7 @@ def client():
 
 def test_booking_deducts_points(client):
     club = loadClubs()[0]  # Prendre un club de test
-    competition = loadCompetitions()[0]  # Prendre une compétition de test
+    competition = loadCompetitions()[2]  # Prendre une compétition de test
     initial_points = int(club["points"])
     places_required = 2
 

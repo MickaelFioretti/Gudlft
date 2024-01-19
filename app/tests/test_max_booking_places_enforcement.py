@@ -12,7 +12,7 @@ def client():
 
 def test_booking_limit_exceeded(client):
     club = loadClubs()[0]  # Utilisez un club de test
-    competition = loadCompetitions()[0]  # Utilisez une compétition de test
+    competition = loadCompetitions()[2]  # Utilisez une compétition de test
     response = client.post(
         "/purchasePlaces",
         data={"club": club["name"], "competition": competition["name"], "places": "13"},
@@ -25,7 +25,7 @@ def test_booking_limit_exceeded(client):
 
 def test_booking_not_exceeding_12_places(client):
     club = loadClubs()[0]  # Utilisez un club de test
-    competition = loadCompetitions()[0]  # Utilisez une compétition de test
+    competition = loadCompetitions()[2]  # Utilisez une compétition de test
     response = client.post(
         "/purchasePlaces",
         data={"club": club["name"], "competition": competition["name"], "places": "12"},
