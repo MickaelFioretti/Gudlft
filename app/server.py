@@ -41,7 +41,9 @@ def showSummary():
         return redirect(url_for("index"))
     else:
         club = matched_clubs[0]
-        return render_template("welcome.html", club=club, competitions=competitions)
+        return render_template(
+            "welcome.html", club=club, competitions=competitions, clubs=clubs
+        )
 
 
 @app.route("/book/<competition>/<club>")
@@ -54,7 +56,9 @@ def book(competition, club):
         )
     else:
         flash("Something went wrong-please try again")
-        return render_template("welcome.html", club=club, competitions=competitions)
+        return render_template(
+            "welcome.html", club=club, competitions=competitions, clubs=clubs
+        )
 
 
 @app.route("/purchasePlaces", methods=["POST"])
@@ -71,17 +75,23 @@ def purchasePlaces():
     # Vérifier si la date de la compétition est passée
     if datetime.now() > datetime.strptime(competition["date"], "%Y-%m-%d %H:%M:%S"):
         flash("Cannot book places for past competitions.")
-        return render_template("welcome.html", club=club, competitions=competitions)
+        return render_template(
+            "welcome.html", club=club, competitions=competitions, clubs=clubs
+        )
 
     # Vérifier si le nombre de places demandées dépasse 12
     if placesRequired > 12:
         flash("Cannot book more than 12 places for a competition.")
-        return render_template("welcome.html", club=club, competitions=competitions)
+        return render_template(
+            "welcome.html", club=club, competitions=competitions, clubs=clubs
+        )
 
     # Vérification des points disponibles
     if placesRequired > int(club["points"]):
         flash("You don't have enough points for this booking.")
-        return render_template("welcome.html", club=club, competitions=competitions)
+        return render_template(
+            "welcome.html", club=club, competitions=competitions, clubs=clubs
+        )
 
     # Mise à jour des points du club et des places disponibles dans la compétition
     competition["numberOfPlaces"] = int(competition["numberOfPlaces"]) - placesRequired
@@ -95,7 +105,9 @@ def purchasePlaces():
         json.dump({"competitions": competitions}, comps)
 
     flash("Great-booking complete!")
-    return render_template("welcome.html", club=club, competitions=competitions)
+    return render_template(
+        "welcome.html", club=club, competitions=competitions, clubs=clubs
+    )
 
 
 # TODO: Add route for points display
